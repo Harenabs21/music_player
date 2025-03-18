@@ -12,51 +12,6 @@ export default function useAudioPlayer(audioFiles: any[]) {
         duration: 1,
     });
 
-    // Charger et jouer un son par index
-    // const loadAndPlayAudio = async (index: number) => {
-    //     if (index < 0 || index >= audioFiles.length) return;
-
-    //     const file = audioFiles[index];
-
-    //     if (sound) {
-    //         await sound.unloadAsync();
-    //     }
-
-    //     const { sound: newSound } = await Audio.Sound.createAsync(
-    //         { uri: file.uri },
-    //         { shouldPlay: true }
-    //     );
-
-    //     newSound.setOnPlaybackStatusUpdate((status) => {
-    //         if (status.isLoaded) {
-    //             setState({
-    //                 isPlaying: status.isPlaying,
-    //                 position: status.positionMillis,
-    //                 duration: status.durationMillis || 1,
-    //             });
-
-    //             if (status.didJustFinish) {
-    //                 if (
-    //                     currentIndex !== null &&
-    //                     currentIndex < audioFiles.length - 1
-    //                 ) {
-    //                     nextAudio(); // ✅ Passe à la prochaine chanson uniquement si ce n'est pas la dernière
-    //                 } else {
-    //                     setState((prevState) => ({
-    //                         ...prevState,
-    //                         isPlaying: false,
-    //                     })); // ✅ Stoppe la lecture à la fin
-    //                 }
-    //             }
-    //         }
-    //     });
-
-    //     setSound(newSound);
-    //     setCurrentIndex(index);
-    //     setCurrentTitle(file.filename); // 🔥 Met à jour le titre affiché
-    //     setIsFirstPlay(false);
-    // };
-
     const loadAndPlayAudio = async (index: number) => {
         if (index < 0 || index >= audioFiles.length) return;
 
