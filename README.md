@@ -1,50 +1,34 @@
-# Welcome to your Expo app 👋
+# Local Music Player 🎵
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Welcome to **Local Music Player**, a simple yet powerful app to enjoy your locally stored music! Built with love using React Native and Expo, this app brings your tunes to life with classic features and a smooth user experience. 🎧✨
 
-## Get started
+---
 
-1. Install dependencies
+## Features 🚀
 
-   ```bash
-   npm install
-   ```
+- **Play Your Songs** 🎶  
+  Load and play your local audio files with ease. Hit play and let the music flow!  
+  *▶️ Press to vibe!*
 
-2. Start the app
+- **Notification Controls** 📲  
+  Manage playback right from your notifications: play ▶️, pause ⏸️, skip to the next track ⏭️, or go back ⏮️. Stay in control without opening the app!  
 
-   ```bash
-    npx expo start
-   ```
+- **Playlist Management** 📃  
+  Create, edit, and enjoy your custom playlists. Organize your jams your way!  
+  *✨ Add a song, feel the groove!*
 
-In the output, you'll find options to open the app in a
+- **Smooth Audio Experience** 🔊  
+  Seamless transitions between tracks, with automatic playback of the next song when one ends. Music never stops!  
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Tech Stack 🛠️
 
-## Get a fresh project
+- **React Native** ⚛️ - For a slick cross-platform UI.  
+- **Expo** 📦 - Simplifying development and audio handling.  
+- **Expo AV** 🎙️ - Powering audio playback with `Audio.Sound`.  
+- **MusicControl** 🔔 - Enabling notification controls for a native feel
 
-When you're ready, run:
+## Contributors
 
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- [Harenabs21](https://github.com/Harenabs21)
+- [Lalaina0904](https://github.com/Lalaina0904)
