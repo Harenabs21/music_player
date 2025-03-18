@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Audio } from 'expo-av';
-
+import MusicControl, { Command } from 'react-native-music-control';
 export default function useAudioPlayer(audioFiles: any[]) {
     const [sound, setSound] = useState<Audio.Sound | null>(null);
     const [currentIndex, setCurrentIndex] = useState<number | null>(null);
@@ -12,65 +12,20 @@ export default function useAudioPlayer(audioFiles: any[]) {
         duration: 1,
     });
 
-    // Charger et jouer un son par index
-    // const loadAndPlayAudio = async (index: number) => {
-    //     if (index < 0 || index >= audioFiles.length) return;
-
-    //     const file = audioFiles[index];
-
-    //     if (sound) {
-    //         await sound.unloadAsync();
-    //     }
-
-    //     const { sound: newSound } = await Audio.Sound.createAsync(
-    //         { uri: file.uri },
-    //         { shouldPlay: true }
-    //     );
-
-    //     newSound.setOnPlaybackStatusUpdate((status) => {
-    //         if (status.isLoaded) {
-    //             setState({
-    //                 isPlaying: status.isPlaying,
-    //                 position: status.positionMillis,
-    //                 duration: status.durationMillis || 1,
-    //             });
-
-    //             if (status.didJustFinish) {
-    //                 if (
-    //                     currentIndex !== null &&
-    //                     currentIndex < audioFiles.length - 1
-    //                 ) {
-    //                     nextAudio(); // ✅ Passe à la prochaine chanson uniquement si ce n'est pas la dernière
-    //                 } else {
-    //                     setState((prevState) => ({
-    //                         ...prevState,
-    //                         isPlaying: false,
-    //                     })); // ✅ Stoppe la lecture à la fin
-    //                 }
-    //             }
-    //         }
-    //     });
-
-    //     setSound(newSound);
-    //     setCurrentIndex(index);
-    //     setCurrentTitle(file.filename); // 🔥 Met à jour le titre affiché
-    //     setIsFirstPlay(false);
-    // };
-
     const loadAndPlayAudio = async (index: number) => {
         if (index < 0 || index >= audioFiles.length) return;
-
+    
         const file = audioFiles[index];
-
+    
         if (sound) {
             await sound.unloadAsync();
         }
-
+    
         const { sound: newSound } = await Audio.Sound.createAsync(
             { uri: file.uri },
             { shouldPlay: true } // ✅ Active la lecture immédiate
         );
-
+    
         newSound.setOnPlaybackStatusUpdate(async (status) => {
             if (status.isLoaded) {
                 setState({
@@ -78,7 +33,7 @@ export default function useAudioPlayer(audioFiles: any[]) {
                     position: status.positionMillis,
                     duration: status.durationMillis || 1,
                 });
-
+    
                 // ✅ Quand la chanson est terminée
                 if (status.didJustFinish) {
                     if (index < audioFiles.length - 1) {
@@ -95,7 +50,46 @@ export default function useAudioPlayer(audioFiles: any[]) {
                 }
             }
         });
-
+        const status = await newSound.getStatusAsync();
+        const duration = status.isLoaded ? status.durationMillis || 1 : 1;
+    
+        // ✅ Mettre à jour les notifications avec les métadonnées du morceau
+        MusicControl.setNowPlaying({
+            title: file.filename, // Titre du morceau
+            artist: 'Unknown Artist', 
+            artwork: require('@/assets/images/unknown_track.png'), 
+            duration: duration, // Durée du morceau
+            color: '#79299E'
+        });
+    
+        // ✅ Activer les contrôles de notification
+        MusicControl.enableControl('play', true);
+        MusicControl.enableControl('pause', true);
+        MusicControl.enableControl('nextTrack', index < audioFiles.length - 1); // Suivant uniquement s'il y a une chanson suivante
+        MusicControl.enableControl('previousTrack', index > 0); // Précédent uniquement s'il y a une chanson précédente
+        MusicControl.enableControl('closeNotification', true, { when: 'paused' })
+    
+        // ✅ Ajouter des listeners pour les actions de notification
+        MusicControl.on(Command.play, () => {
+            newSound.playAsync();
+        });
+    
+        MusicControl.on(Command.pause, () => {
+            newSound.pauseAsync();
+        });
+    
+        MusicControl.on(Command.nextTrack, () => {
+            if (index < audioFiles.length - 1) {
+                loadAndPlayAudio(index + 1);
+            }
+        });
+    
+        MusicControl.on(Command.previousTrack, () => {
+            if (index > 0) {
+                loadAndPlayAudio(index - 1);
+            }
+        });
+    
         setSound(newSound);
         setCurrentIndex(index);
         setCurrentTitle(file.filename);
